@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Live Turbulence Risk Estimator</title>
     <link
       rel="stylesheet"
@@ -13,43 +13,36 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header>
-      <h1>Live Aircraft Turbulence Risk Estimator</h1>
-      <p>
-        Educational estimate only. <strong>Not</strong> for operational aviation
-        safety decisions.
-      </p>
+    <header id="top-bar" aria-live="polite">
+      <div class="metric"><span>Aircraft</span><strong id="live-count">0</strong></div>
+      <div class="metric"><span>Selected</span><strong id="selected-flight">None</strong></div>
+      <div class="metric"><span>Mode</span><strong id="mode-pill">Heuristic v2</strong></div>
     </header>
 
     <main>
-      <section id="map"></section>
-
-      <aside id="side-panel" class="collapsed" aria-live="polite">
-        <div class="panel-header">
-          <h2>Aircraft Details</h2>
-          <button id="close-panel" aria-label="Close details panel">×</button>
+      <section id="map-wrap">
+        <div id="map"></div>
+        <div id="status-chip" role="status" aria-live="polite">
+          <span id="status-text">Starting up…</span>
         </div>
+      </section>
 
-        <div id="panel-content">
-          <p>Select an aircraft marker to view details and turbulence estimate.</p>
-        </div>
+      <section id="leaderboard" class="collapsed" aria-label="Roughest flights leaderboard">
+        <button id="leaderboard-toggle" class="ghost-btn">Roughest Flights Right Now</button>
+        <ul id="leaderboard-list"></ul>
+      </section>
 
-        <div id="status-message" class="status"></div>
+      <aside id="sheet" class="open" aria-live="polite">
+        <button id="sheet-handle" aria-label="Toggle flight details">Flight details</button>
+        <div id="sheet-content"></div>
       </aside>
     </main>
-
-    <footer>
-      <small>
-        Data sources: OpenSky Network (aircraft states), Open-Meteo (weather).
-        Estimates may be stale, incomplete, or incorrect.
-      </small>
-    </footer>
 
     <script
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
-    <script src="app.js"></script>
+    <script type="module" src="app.js"></script>
   </body>
 </html>

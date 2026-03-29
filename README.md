@@ -1,32 +1,35 @@
 # Live Turbulence Risk Estimator (Frontend)
 
-A simple vanilla JavaScript web app that visualizes live aircraft and estimates turbulence risk using nearby weather fields.
+A lightweight, frontend-first Leaflet app that visualizes live aircraft and estimated turbulence risk using OpenSky + Open-Meteo.
 
-## Features
+## Highlights (V2)
 
-- World map rendered with Leaflet.
-- Live aircraft positions from OpenSky Network.
-- Marker refresh every 15 seconds.
-- Side panel for selected aircraft:
-  - callsign
-  - origin country
-  - altitude
-  - velocity
-  - latitude / longitude
-- On aircraft click, app fetches nearby weather from Open-Meteo.
-- Turbulence estimate based on:
-  - wind speed
-  - wind shear between pressure levels
-  - CAPE
-  - cloud cover
-  - gusts
-- Risk label: **Low / Moderate / High**.
-- Human-readable explanation of score drivers.
-- UI disclaimer that this is not a real aviation safety tool.
+- Mobile-first responsive layout with:
+  - compact top status bar
+  - thumb-friendly controls
+  - collapsible mobile bottom sheet for flight details
+  - collapsible "Roughest Flights Right Now" leaderboard
+- Dark aviation-style visual design with subtle radar-like overlays.
+- Efficient marker upsert/update flow (no full marker recreation every refresh).
+- Color-coded aircraft markers by risk (low/moderate/high).
+- Route sampling ahead of selected aircraft at 0 / +25 / +50 / +100 km.
+- Explainable turbulence heuristic with plain-English factor descriptions.
+- Loading, empty, and error states optimized for small screens.
+- Weather lookup cache by rounded coordinates to reduce duplicate requests.
+
+## Data sources
+
+- OpenSky Network: aircraft states.
+- Open-Meteo: weather variables used in heuristic scoring.
+
+## Important disclaimer
+
+This tool is an **estimated turbulence-risk visualization** for education and exploration only.
+It is **not** a flight-safety, dispatch, or operational aviation system.
 
 ## Run locally
 
-Because this app calls external APIs, run it from a local web server (not `file://`).
+Because this app calls external APIs, run from a local web server (not `file://`).
 
 ### Option 1: Python
 
@@ -41,9 +44,3 @@ Open: `http://localhost:8080`
 ```bash
 npx serve .
 ```
-
-## Notes
-
-- OpenSky may rate-limit or reject unauthenticated requests.
-- Open-Meteo responses depend on model availability for each coordinate.
-- The scoring model is intentionally simple and heuristic.
